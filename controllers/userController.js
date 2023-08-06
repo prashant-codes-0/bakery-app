@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = process.env;
+const config =require('../config/config')
 const User = require('../models/user');
 
 exports.signup = (req, res) => {
@@ -63,7 +63,7 @@ exports.login = (req, res) => {
   
           // Passwords match, user is authenticated
           // Generate and send a JWT token in the response
-          const token = jwt.sign({ id: user._id, name: user.name, email: user.email }, JWT_SECRET, {
+          const token = jwt.sign({ id: user._id, name: user.name, email: user.email }, config.JWT_SECRET, {
             expiresIn: '1d', // Token expiration time
           });
   

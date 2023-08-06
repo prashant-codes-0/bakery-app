@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = process.env;
+const config=require('../config/config')
 const BakeryItem = require('../models/bakeryItem');
 
 // Place an order for a bakery item (authenticated route)
@@ -14,7 +14,7 @@ exports.placeOrder = (req, res) => {
   }
 
   // Verify the token to check if it's valid and extract the user data
-  jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+  jwt.verify(token, config.JWT_SECRET, (err, decodedToken) => {
     if (err) {
       return res.status(401).json({ error: 'Unauthorized: Invalid token.' });
     }
@@ -22,6 +22,7 @@ exports.placeOrder = (req, res) => {
     // Token is valid, user is authenticated
     // You can access the user data from the decodedToken
     const userId = decodedToken.id;
+    console.log(userId)
 
     // Proceed with the order placement logic here
     // For example, find the bakery item by ID and create the order
